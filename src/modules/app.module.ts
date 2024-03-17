@@ -13,9 +13,11 @@ import { SampleController } from 'src/controllers/sample.controller';
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    MongooseModule.forRoot(process.env.database),
+    MongooseModule.forRoot(
+      `mongodb+srv://nguyenhung220102:nguyenhung2002@efm.entegus.mongodb.net/?retryWrites=true&w=majority&appName=EFM`,
+    ),
     JwtModule.register({
-      secret: process.env.secret,
+      secret: 'naduwu21923ujjdsw--122dhuqwd3',
       signOptions: { expiresIn: '10h' },
     }),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
