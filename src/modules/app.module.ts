@@ -13,9 +13,9 @@ import { SampleController } from 'src/controllers/sample.controller';
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    MongooseModule.forRoot(process.env.database),
+    MongooseModule.forRoot(process.env.DATABASE),
     JwtModule.register({
-      secret: process.env.secret,
+      secret: process.env.SECRET,
       signOptions: { expiresIn: '10h' },
     }),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
