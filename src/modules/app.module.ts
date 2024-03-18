@@ -10,9 +10,13 @@ import { User, UserSchema } from 'src/models/user.model';
 import { Sample, SampleSchema } from 'src/models/sample.model';
 import { SampleService } from 'src/services/sample.service';
 import { SampleController } from 'src/controllers/sample.controller';
+
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      envFilePath: '.env',
+      isGlobal: true,
+    }),
     MongooseModule.forRoot(process.env.DATABASE),
     JwtModule.register({
       secret: process.env.SECRET,
@@ -23,5 +27,6 @@ import { SampleController } from 'src/controllers/sample.controller';
   ],
   controllers: [AppController, UserController, SampleController],
   providers: [AppService, UserService, SampleService],
+  exports: [ConfigModule],
 })
 export class AppModule {}
