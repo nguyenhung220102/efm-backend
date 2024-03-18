@@ -4,11 +4,15 @@ import { Model } from 'mongoose';
 import { User, UserDocument } from '../models/user.model';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { SignInDto } from 'src/dto/user.dto';
+import { SignUpDto } from 'src/dto/user.dto';
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(
+    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+  ) {}
   async signup(
-    user: User,
+    user: SignUpDto,
     jwt: JwtService,
   ): Promise<{ info: User; token: string }> {
     if (!user.name || !user.email || !user.password) {
@@ -42,7 +46,7 @@ export class UserService {
       token: token,
     };
   }
-  async signin(user: User, jwt: JwtService): Promise<any> {
+  async signin(user: SignInDto, jwt: JwtService): Promise<any> {
     const foundUser = await this.userModel
       .findOne({ email: user.email })
       .exec();

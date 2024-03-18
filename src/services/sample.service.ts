@@ -9,13 +9,14 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Sample, SampleDocument } from '../models/sample.model';
 import { User } from 'src/models/user.model';
+import { CreateSampleDto } from 'src/dto/sample.dto';
 @Injectable()
 export class SampleService {
   constructor(
     @InjectModel(Sample.name) private sampleModel: Model<SampleDocument>,
   ) {}
 
-  async create(user: User, @Body() body): Promise<Sample> {
+  async create(user: User, @Body() body: CreateSampleDto): Promise<Sample> {
     const sample = new this.sampleModel({ ...body, createdBy: user });
     const savedSample = await sample.save();
     return savedSample;
@@ -49,7 +50,11 @@ export class SampleService {
     return samples;
   }
 
-  async update(user: User, @Param() params, @Body() body): Promise<Sample> {
+  async update(
+    user: User,
+    @Param() params,
+    @Body() body: CreateSampleDto,
+  ): Promise<Sample> {
     const sample = await this.sampleModel.findById(params.id).exec();
     if (!sample) {
       throw new NotFoundException('Sample not found');
