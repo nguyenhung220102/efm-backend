@@ -10,6 +10,9 @@ import { User, UserSchema } from 'src/models/user.model';
 import { Sample, SampleSchema } from 'src/models/sample.model';
 import { SampleService } from 'src/services/sample.service';
 import { SampleController } from 'src/controllers/sample.controller';
+import { GoogleService } from 'src/services/google.service';
+import { GoogleStrategy } from 'src/auth/google.strategy';
+import { GoogleController } from 'src/controllers/google.controller';
 
 @Module({
   imports: [
@@ -25,8 +28,19 @@ import { SampleController } from 'src/controllers/sample.controller';
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     MongooseModule.forFeature([{ name: Sample.name, schema: SampleSchema }]),
   ],
-  controllers: [AppController, UserController, SampleController],
-  providers: [AppService, UserService, SampleService],
+  controllers: [
+    AppController,
+    UserController,
+    SampleController,
+    GoogleController,
+  ],
+  providers: [
+    AppService,
+    UserService,
+    SampleService,
+    GoogleService,
+    GoogleStrategy,
+  ],
   exports: [ConfigModule],
 })
 export class AppModule {}
